@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<h1>Welcome <small>{{session.username}} </small></h1>
+<hr>
+
+  <table class="table">
+    <tr>
+    <th>Current savings</th>
+    <th>Safety pillow</th>
+    <th>All savings</th>
+    </tr>
+    <tr>
+      <td>{{current_savings}}</td>
+      <td>{{safety_pillow}}</td>
+      <td>{{all_savings}}</td>
+    </tr>
+  </table>
+<hr>
+<a class="btn btn-primary" href="/add_payment">Add payment</a>
+<hr>
+<h3>Last 10 payment</h3>
+
+<table class="table table-striped">
+  <tr>
+
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Type of savings</th>
+    <th>Date</th>
+    <th></th>
+    <th></th>
+  </tr>
+    {% for payment in payments %}
+  <tr>
+
+    <td>{{payment.type}}</td>
+    <td>{{payment.amount}}</td>
+    <td>{{payment.savings}}</td>
+    <td>{{payment.date}}</td>
+    <td><a href="edit_payment/{{payment.id}}" class="btn btn-default pullright">Edit</a></td>
+    <td>
+      <form action="{{url_for('delete_payment_dash', id=payment.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+      </form>
+    </td>
+  </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

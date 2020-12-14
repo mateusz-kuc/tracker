@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1>Your statistics</h1>
+<table class = "table table-striped">
+<tr>
+  <th>Type</th>
+  <th>Last month</th>
+  <th>Last 6 month</th>
+  <th>Last year</th>
+</tr>
+{% for element in comprasion %}
+<tr>
+
+  <td>{{element.type}}</td>
+  <td>{{element.sum_month}}</td>
+  <td>{{element.sum_6_month}}</td>
+  <td>{{element.sum_year}}</td>
+
+</tr>
+{% endfor %}
+</table>
+<hr>
+<a class="btn btn-primary" href="/search_history">Search in history</a>
+<hr>
+<h1>History of payment </h1>
+
+<hr>
+<table class="table table-striped">
+  <tr>
+
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Date</th>
+    <th></th>
+    <th></th>
+  </tr>
+    {% for payment in payments %}
+  <tr>
+
+    <td>{{payment.type}}</td>
+    <td>{{payment.amount}}</td>
+    <td>{{payment.date}}</td>
+    <td><a href="edit_payment/{{payment.id}}" class="btn btn-default pullright">Edit</a></td>
+    <td>
+      <form action="{{url_for('delete_payment', id=payment.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+      </form>
+    </td>
+  </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
